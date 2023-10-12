@@ -6,4 +6,10 @@ MySQL:
   Database: friends
   TablePrefix: fr_
   UseSSL: false
+  # If you are using MariaDB or Pterodactyl should activate this option. This will download the MariaDB connector.
+  #
+  # If your server does not have an internet connection you can download the connector from
+  # https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.2.0/mariadb-java-client-3.2.0.jar
+  # and put it into the Party And Friends plugin folder under the name "MariaDB-JDBC-Connector.jar".
+  UseMariaDBDriver: false
 IsOnlineServer: true
