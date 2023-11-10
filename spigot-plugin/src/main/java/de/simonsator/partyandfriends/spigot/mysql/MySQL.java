@@ -80,6 +80,28 @@ public class MySQL extends SQLCommunication {
 		}
 		return -1;
 	}
+	/**
+	 *
+	 * @param pPlayerID The ID of the player
+	 * @return Returns the number of friends of a player
+	 */
+	public int getFriendsCount(int pPlayerID) {
+		Connection con = getConnection();
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			rs = (stmt = con.createStatement()).executeQuery("select count(friend1_id) as friends_count from " + TABLE_PREFIX
+					+ "friend_assignment WHERE friend1_id='" + pPlayerID + "' OR friend2_id='" + pPlayerID + "'");
+			if (rs.next()) {
+				return rs.getInt("friends_count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs, stmt);
+		}
+		return 0;
+	}
 
 
 	/**
@@ -94,16 +116,15 @@ public class MySQL extends SQLCommunication {
 		ResultSet rs = null;
 		ArrayList<Integer> list = new ArrayList<>();
 		try {
-			rs = (stmt = con.createStatement()).executeQuery("select friend2_id from " + TABLE_PREFIX
-					+ "friend_assignment WHERE friend1_id='" + pPlayerID + "'");
-			while (rs.next())
-				list.add(rs.getInt("friend2_id"));
-			stmt.close();
-			rs.close();
-			rs = (stmt = con.createStatement()).executeQuery("select friend1_id from " + TABLE_PREFIX
-					+ "friend_assignment WHERE friend2_id='" + pPlayerID + "'");
-			while (rs.next())
-				list.add(rs.getInt("friend1_id"));
+			rs = (stmt = con.createStatement()).executeQuery("select friend2_id, friend1_id from " + TABLE_PREFIX
+					+ "friend_assignment WHERE friend1_id='" + pPlayerID + "' OR friend2_id='" + pPlayerID + "'");
+			while (rs.next()) {
+				int friend1 = rs.getInt("friend1_id");
+				int friend2 = rs.getInt("friend2_id");
+				if (friend1 == pPlayerID)
+					list.add(friend2);
+				else list.add(friend1);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -176,6 +197,28 @@ public class MySQL extends SQLCommunication {
 		}
 		return requests;
 	}
+
+	/**
+	 * @param pPlayerID The ID of the player
+	 * @return Returns the number of friend requests a given player currently has
+	 */
+	public int getRequestsCount(int pPlayerID) {
+		Connection con = getConnection();
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			rs = (stmt = con.createStatement()).executeQuery("select count(requester_id) as request_count from "
+					+ TABLE_PREFIX + "friend_request_assignment WHERE receiver_id='" + pPlayerID + "'");
+			if (rs.next())
+				return rs.getInt("request_count");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs, stmt);
+		}
+		return 0;
+	}
+
 
 	public int getSettingsWorth(int pPlayerID, int pSettingsID) {
 		Connection con = getConnection();

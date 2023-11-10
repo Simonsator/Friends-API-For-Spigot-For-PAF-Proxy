@@ -1,13 +1,17 @@
 package de.simonsator.partyandfriends.spigot.placeholders.placeholderapi;
 
 import de.simonsator.partyandfriends.spigot.api.FriendCountPlaceHolder;
+import de.simonsator.partyandfriends.spigot.api.FriendOnlineCountPlaceholder;
 import de.simonsator.partyandfriends.spigot.api.FriendRequestCountPlaceHolder;
+import de.simonsator.partyandfriends.spigot.api.exceptions.FriendsAPIBridgeNotInstalledException;
+import de.simonsator.partyandfriends.spigot.error.ErrorReporter;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-public class FriendCountPlaceHolderPlaceholderAPI extends PlaceholderExpansion implements FriendCountPlaceHolder, FriendRequestCountPlaceHolder {
+public class FriendCountPlaceHolderPlaceholderAPI extends PlaceholderExpansion implements FriendCountPlaceHolder, FriendRequestCountPlaceHolder, FriendOnlineCountPlaceholder {
 	private final boolean IS_ONLINE_SERVER;
+	private boolean onlineCountErrorRegistered = false;
 
 	@Override
 	public boolean persist() {
@@ -40,18 +44,35 @@ public class FriendCountPlaceHolderPlaceholderAPI extends PlaceholderExpansion i
 
 	@Override
 	public String onPlaceholderRequest(Player pPlayer, String pIdentifier) {
-		if (pIdentifier.equals("friendcount")) {
-			if (IS_ONLINE_SERVER)
-				return getFriendCount(pPlayer.getUniqueId()).toString();
-			else
-				return getFriendCount(pPlayer.getName()).toString();
-		} else if (pIdentifier.equals("friendrequestcount")) {
-			if (IS_ONLINE_SERVER)
-				return getFriendRequestCount(pPlayer.getUniqueId()).toString();
-			else
-				return getFriendRequestCount(pPlayer.getName()).toString();
+		switch (pIdentifier) {
+			case "friendcount":
+				if (IS_ONLINE_SERVER) {
+					return getFriendCount(pPlayer.getUniqueId()).toString();
+				} else {
+					return getFriendCount(pPlayer.getName()).toString();
+				}
+			case "friendrequestcount":
+				if (IS_ONLINE_SERVER) {
+					return getFriendRequestCount(pPlayer.getUniqueId()).toString();
+				} else {
+					return getFriendRequestCount(pPlayer.getName()).toString();
+				}
+			case "onlinefriendcount":
+				try {
+					if (IS_ONLINE_SERVER) {
+						return getOnlineFriendCount(pPlayer.getUniqueId()).toString();
+					} else {
+						return getOnlineFriendCount(pPlayer.getName()).toString();
+					}
+				} catch (FriendsAPIBridgeNotInstalledException e) {
+					if (!onlineCountErrorRegistered) {
+						onlineCountErrorRegistered = true;
+						new ErrorReporter(e.getMessage());
+					}
+				}
+			default:
+				return null;
 		}
-		return null;
 	}
 }
 

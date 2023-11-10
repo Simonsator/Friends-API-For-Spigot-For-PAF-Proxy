@@ -19,6 +19,6 @@ public interface FriendCountPlaceHolder {
 	}
 
 	default Integer getFriendCount(PAFPlayer pPlayer) {
-		return pPlayer.getFriends().size();
+		return pPlayer.getFriendsCount();
 	}
 }

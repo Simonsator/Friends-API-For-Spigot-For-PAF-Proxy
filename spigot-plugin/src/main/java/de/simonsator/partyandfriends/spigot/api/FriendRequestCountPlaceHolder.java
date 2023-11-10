@@ -15,7 +15,7 @@ public interface FriendRequestCountPlaceHolder {
 	}
 
 	default Integer getFriendRequestCount(PAFPlayer pPlayer) {
-		return pPlayer.getRequests().size();
+		return pPlayer.getFriendsRequestCount();
 	}
 
 }

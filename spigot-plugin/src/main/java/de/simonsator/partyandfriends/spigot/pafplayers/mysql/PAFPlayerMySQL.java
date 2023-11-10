@@ -87,6 +87,16 @@ public class PAFPlayerMySQL extends PAFPlayerClass {
 	}
 
 	@Override
+	public int getFriendsCount() {
+		return PAFPlayerManagerMySQL.getConnection().getFriendsCount(ID);
+	}
+
+	@Override
+	public int getFriendsRequestCount() {
+		return PAFPlayerManagerMySQL.getConnection().getRequestsCount(ID);
+	}
+
+	@Override
 	public boolean hasRequestFrom(PAFPlayer pPlayer) {
 		return PAFPlayerManagerMySQL.getConnection().hasRequestFrom(ID, ((PAFPlayerMySQL) pPlayer.getPAFPlayer()).getPlayerID());
 	}

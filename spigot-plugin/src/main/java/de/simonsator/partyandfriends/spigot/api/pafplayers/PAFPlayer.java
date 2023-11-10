@@ -28,4 +28,7 @@ public interface PAFPlayer {
 	long getLastOnline();
 
 	int getOnlineFriendsCount() throws FriendsAPIBridgeNotInstalledException;
+
+	int getFriendsCount();
+	int getFriendsRequestCount();
 }
