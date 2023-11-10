@@ -5,62 +5,36 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>de.simonsator</groupId>
-	<artifactId>Party-and-Friends-MySQL-Edition-Spigot-API</artifactId>
-	<version>1.5.5-RELEASE</version>
+	<artifactId>spigot-friends-api-parent</artifactId>
+	<version>1.6.0-RELEASE</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>proxy-common</module>
+		<module>bungeecord-mysql</module>
+        <module>spigot-plugin</module>
+		<module>final-build</module>
+		<module>velocity-mysql</module>
+	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.deploy.skip>false</maven.deploy.skip>
 	</properties>
 	<repositories>
 		<repository>
-			<id>spigot-repo</id>
-			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-		</repository>
-		<repository>
-			<id>placeholderapi</id>
-			<url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+			<id>simonsators-repo</id>
+			<url>https://simonsator.de/repo</url>
 		</repository>
 	</repositories>
-	<dependencies>
-		<dependency>
-			<groupId>org.spigotmc</groupId>
-			<artifactId>spigot-api</artifactId>
-			<version>1.19-R0.1-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>me.clip</groupId>
-			<artifactId>placeholderapi</artifactId>
-			<version>2.11.1</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.2</version>
+				<version>3.11.0</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.3.0</version>
-				<configuration>
-					<createDependencyReducedPom>false</createDependencyReducedPom>
-					<outputFile>${project.build.directory}/Friends-API-For-PAF-${project.version}.jar</outputFile>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 		<resources>
