@@ -1,5 +1,7 @@
 package de.simonsator.partyandfriends.spigot.api.pafplayers;
 
+import de.simonsator.partyandfriends.spigot.api.exceptions.FriendsAPIBridgeNotInstalledException;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -24,4 +26,6 @@ public interface PAFPlayer {
 	PAFPlayer getPAFPlayer();
 
 	long getLastOnline();
+
+	int getOnlineFriendsCount() throws FriendsAPIBridgeNotInstalledException;
 }

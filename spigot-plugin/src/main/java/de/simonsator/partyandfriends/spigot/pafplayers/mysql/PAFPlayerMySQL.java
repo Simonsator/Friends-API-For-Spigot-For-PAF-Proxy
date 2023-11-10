@@ -1,11 +1,13 @@
 package de.simonsator.partyandfriends.spigot.pafplayers.mysql;
 
 
+import de.simonsator.partyandfriends.spigot.api.exceptions.FriendsAPIBridgeNotInstalledException;
 import de.simonsator.partyandfriends.spigot.api.pafplayers.PAFPlayer;
 import de.simonsator.partyandfriends.spigot.api.pafplayers.PAFPlayerClass;
 import de.simonsator.partyandfriends.spigot.api.pafplayers.PAFPlayerManager;
 import de.simonsator.partyandfriends.spigot.pafplayers.manager.PAFPlayerManagerMySQL;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -72,6 +74,16 @@ public class PAFPlayerMySQL extends PAFPlayerClass {
 	@Override
 	public long getLastOnline() {
 		return PAFPlayerManagerMySQL.getConnection().getLastOnline(ID).getTime();
+	}
+
+	@Override
+	public int getOnlineFriendsCount() throws FriendsAPIBridgeNotInstalledException {
+		try {
+			return PAFPlayerManagerMySQL.getConnection().getOnlineFriendsCount(ID);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new FriendsAPIBridgeNotInstalledException();
+		}
 	}
 
 	@Override

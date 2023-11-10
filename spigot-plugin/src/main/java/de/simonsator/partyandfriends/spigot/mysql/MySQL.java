@@ -20,7 +20,7 @@ public class MySQL extends SQLCommunication {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			rs = (stmt = con.createStatement()).executeQuery("select player_uuid from `" + DATABASE + "`." + TABLE_PREFIX
+			rs = (stmt = con.createStatement()).executeQuery("select player_uuid from " + TABLE_PREFIX
 					+ "players WHERE player_id='" + pPlayerID + "' LIMIT 1");
 			if (rs.next()) {
 				return UUID.fromString(rs.getString("player_uuid"));
@@ -44,7 +44,7 @@ public class MySQL extends SQLCommunication {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			rs = (stmt = con.createStatement()).executeQuery("select player_id from `" + DATABASE + "`." + TABLE_PREFIX
+			rs = (stmt = con.createStatement()).executeQuery("select player_id from " + TABLE_PREFIX
 					+ "players WHERE player_uuid='" + pUuid + "' LIMIT 1");
 			if (rs.next()) {
 				return rs.getInt("player_id");
@@ -68,7 +68,7 @@ public class MySQL extends SQLCommunication {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			rs = (stmt = con.createStatement()).executeQuery("select player_id from `" + DATABASE + "`." + TABLE_PREFIX
+			rs = (stmt = con.createStatement()).executeQuery("select player_id from " + TABLE_PREFIX
 					+ "players WHERE player_name='" + pPlayerName + "' LIMIT 1");
 			if (rs.next()) {
 				return rs.getInt("player_id");
@@ -94,13 +94,13 @@ public class MySQL extends SQLCommunication {
 		ResultSet rs = null;
 		ArrayList<Integer> list = new ArrayList<>();
 		try {
-			rs = (stmt = con.createStatement()).executeQuery("select friend2_id from `" + DATABASE + "`." + TABLE_PREFIX
+			rs = (stmt = con.createStatement()).executeQuery("select friend2_id from " + TABLE_PREFIX
 					+ "friend_assignment WHERE friend1_id='" + pPlayerID + "'");
 			while (rs.next())
 				list.add(rs.getInt("friend2_id"));
 			stmt.close();
 			rs.close();
-			rs = (stmt = con.createStatement()).executeQuery("select friend1_id from `" + DATABASE + "`." + TABLE_PREFIX
+			rs = (stmt = con.createStatement()).executeQuery("select friend1_id from " + TABLE_PREFIX
 					+ "friend_assignment WHERE friend2_id='" + pPlayerID + "'");
 			while (rs.next())
 				list.add(rs.getInt("friend1_id"));
@@ -123,7 +123,7 @@ public class MySQL extends SQLCommunication {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			rs = (stmt = con.createStatement()).executeQuery("select player_name from `" + DATABASE + "`." + TABLE_PREFIX
+			rs = (stmt = con.createStatement()).executeQuery("select player_name from " + TABLE_PREFIX
 					+ "players WHERE player_id='" + pPlayerID + "' LIMIT 1");
 			if (rs.next())
 				return rs.getString("player_name");
@@ -140,7 +140,7 @@ public class MySQL extends SQLCommunication {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			rs = (stmt = con.createStatement()).executeQuery("select requester_id from `" + DATABASE + "`."
+			rs = (stmt = con.createStatement()).executeQuery("select requester_id from "
 					+ TABLE_PREFIX + "friend_request_assignment WHERE receiver_id='" + pReceiver + "' AND requester_id='"
 					+ pRequester + "' LIMIT 1");
 			if (rs.next())
@@ -165,7 +165,7 @@ public class MySQL extends SQLCommunication {
 		ResultSet rs = null;
 		ArrayList<Integer> requests = new ArrayList<>();
 		try {
-			rs = (stmt = con.createStatement()).executeQuery("select requester_id from `" + DATABASE + "`."
+			rs = (stmt = con.createStatement()).executeQuery("select requester_id from "
 					+ TABLE_PREFIX + "friend_request_assignment WHERE receiver_id='" + pPlayerID + "'");
 			while (rs.next())
 				requests.add(rs.getInt("requester_id"));
@@ -183,7 +183,7 @@ public class MySQL extends SQLCommunication {
 		ResultSet rs = null;
 		try {
 			rs = (stmt = con.createStatement()).executeQuery(
-					"select settings_worth from `" + DATABASE + "`." + TABLE_PREFIX + "settings WHERE player_id='"
+					"select settings_worth from " + TABLE_PREFIX + "settings WHERE player_id='"
 							+ pPlayerID + "' AND settings_id='" + pSettingsID + "' LIMIT 1");
 			if (rs.next()) {
 				return rs.getInt("settings_worth");
@@ -201,7 +201,7 @@ public class MySQL extends SQLCommunication {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			rs = (stmt = con.createStatement()).executeQuery("select last_online from `" + DATABASE + "`."
+			rs = (stmt = con.createStatement()).executeQuery("select last_online from "
 					+ TABLE_PREFIX + "players WHERE player_id='" + pPlayerID + "' LIMIT 1");
 			if (rs.next())
 				return rs.getTimestamp("last_online");
@@ -218,7 +218,7 @@ public class MySQL extends SQLCommunication {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			rs = (stmt = con.createStatement()).executeQuery("Select friend1_id FROM `" + DATABASE + "`." + TABLE_PREFIX
+			rs = (stmt = con.createStatement()).executeQuery("Select friend1_id FROM " + TABLE_PREFIX
 					+ "friend_assignment WHERE (friend1_id = '" + pPlayerID1 + "' AND friend2_id='" + pPlayerID2
 					+ "') OR (friend1_id = '" + pPlayerID2 + "' AND friend2_id='" + pPlayerID1 + "') LIMIT 1");
 			if (rs.next()) {
@@ -239,7 +239,7 @@ public class MySQL extends SQLCommunication {
 			PreparedStatement prepStmt = null;
 			try {
 				prepStmt = con.prepareStatement(
-						"insert into `" + DATABASE + "`." + TABLE_PREFIX + "settings values (?, ?, ?)");
+						"insert into " + TABLE_PREFIX + "settings values (?, ?, ?)");
 				prepStmt.setInt(1, pPlayerID);
 				prepStmt.setInt(2, pSettingsID);
 				prepStmt.setInt(3, pNewWorth);
@@ -256,7 +256,7 @@ public class MySQL extends SQLCommunication {
 		Connection con = getConnection();
 		PreparedStatement prepStmt = null;
 		try {
-			prepStmt = con.prepareStatement("DELETE FROM `" + DATABASE + "`." + TABLE_PREFIX
+			prepStmt = con.prepareStatement("DELETE FROM " + TABLE_PREFIX
 					+ "settings WHERE player_id = '" + pPlayerID + "' AND settings_id='" + pSettingsID + "' Limit 1");
 			prepStmt.execute();
 		} catch (SQLException e) {
@@ -266,4 +266,23 @@ public class MySQL extends SQLCommunication {
 		}
 	}
 
+	public int getOnlineFriendsCount(int pPlayerId) throws SQLException {
+		Connection con = getConnection();
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			rs = (stmt = con.createStatement()).executeQuery("select count(online.player_id) AS online_count from " + TABLE_PREFIX
+					+ "online AS online LEFT JOIN " + TABLE_PREFIX +
+					"settings AS settings ON online.player_id = settings.player_id AND settings_id = 3 INNER JOIN " +
+					TABLE_PREFIX + "friend_assignment ON ((friend1_id = online.player_id AND friend2_id='" + pPlayerId +
+					"') OR (friend2_id = online.player_id AND friend1_id='" + pPlayerId +
+					"')) AND (settings_worth <> 1 or settings_worth is null)");
+			if (rs.next()) {
+				return rs.getInt("online_count");
+			}
+		} finally {
+			close(rs, stmt);
+		}
+		return 0;
+	}
 }
