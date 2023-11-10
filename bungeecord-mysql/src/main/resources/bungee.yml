@@ -1,0 +1,7 @@
+main: de.simonsator.partyandfriends.friendsapi.proxy.bungee.FriendsAPIBridgeMain
+name: Friends-API-MySQL-Proxy-Bridge
+version: ${project.version}
+author: Simonsator
+depend: [ PartyAndFriends ]
+depends:
+  - PartyAndFriends

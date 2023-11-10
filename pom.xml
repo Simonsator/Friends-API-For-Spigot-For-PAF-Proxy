@@ -7,6 +7,11 @@
 	<groupId>de.simonsator</groupId>
 	<artifactId>Party-and-Friends-MySQL-Edition-Spigot-API</artifactId>
 	<version>1.5.5-RELEASE</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>proxy-common</module>
+		<module>bungeecord-mysql</module>
+	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -18,6 +23,10 @@
 		<repository>
 			<id>placeholderapi</id>
 			<url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+		</repository>
+		<repository>
+			<id>simonsators-repo</id>
+			<url>https://simonsator.de/repo</url>
 		</repository>
 	</repositories>
 	<dependencies>
