@@ -25,7 +25,7 @@
                             <include>de.simonsator:spigot-friends-api-proxy-common</include>
                             <include>de.simonsator:spigot-friends-api-bungeecord-mysql</include>
                             <include>de.simonsator:spigot-friends-api-velocity-mysql</include>
-                            <include>de.simonsator:spigot-friends-api-spigot-plugin</include>
+                            <include>de.simonsator:Party-and-Friends-MySQL-Edition-Spigot-API</include>
                         </includes>
                     </artifactSet>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
