@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>de.simonsator</groupId>
-        <artifactId>Party-and-Friends-MySQL-Edition-Spigot-API</artifactId>
+        <artifactId>spigot-friends-api-parent</artifactId>
         <version>1.5.5-RELEASE</version>
     </parent>
 
-    <artifactId>spigot-friends-api-spigot-plugin</artifactId>
+    <artifactId>Party-and-Friends-MySQL-Edition-Spigot-API</artifactId>
     <repositories>
         <repository>
             <id>spigot-repo</id>
