@@ -9,7 +9,7 @@
         <version>1.5.5-RELEASE</version>
     </parent>
 
-    <artifactId>bungeecord-mysql</artifactId>
+    <artifactId>spigot-friends-api-bungeecord-mysql</artifactId>
     <repositories>
         <repository>
             <id>bungeecord-repo</id>
