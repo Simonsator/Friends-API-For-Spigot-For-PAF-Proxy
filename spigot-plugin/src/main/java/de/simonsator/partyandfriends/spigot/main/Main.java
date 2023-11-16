@@ -39,7 +39,8 @@ public class Main extends JavaPlugin {
 		mySQLData = new MySQLData(getConfig().getString("MySQL.Host"),
 				getConfig().getString("MySQL.Username"), getConfig().getString("MySQL.Password"),
 				getConfig().getInt("MySQL.Port"), getConfig().getString("MySQL.Database"),
-				getConfig().getString("MySQL.TablePrefix"), getConfig().getBoolean("MySQL.UseSSL"), driverURL);
+				getConfig().getString("MySQL.TablePrefix"), getConfig().getBoolean("MySQL.UseSSL"), driverURL,
+				getConfig().getBoolean("MySQL.UseIDCache"));
 		new PAFPlayerManagerMySQL(mySQLData);
 		final JavaPlugin plugin = this;
 		getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {

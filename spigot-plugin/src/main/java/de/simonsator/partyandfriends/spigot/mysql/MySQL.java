@@ -2,6 +2,9 @@ package de.simonsator.partyandfriends.spigot.mysql;
 
 import de.simonsator.partyandfriends.spigot.communication.sql.MySQLData;
 import de.simonsator.partyandfriends.spigot.communication.sql.SQLCommunication;
+import de.simonsator.partyandfriends.spigot.mysql.cache.LocalPlayerCache;
+import de.simonsator.partyandfriends.spigot.mysql.cache.NoCache;
+import de.simonsator.partyandfriends.spigot.mysql.cache.PlayerCache;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,10 +12,16 @@ import java.util.UUID;
 
 public class MySQL extends SQLCommunication {
 	private final String TABLE_PREFIX;
+	private final PlayerCache CACHE;
 
 	public MySQL(MySQLData pMySQLData) {
 		super(pMySQLData.DATABASE, pMySQLData.DRIVER_URL + pMySQLData.HOST + ":" + pMySQLData.PORT, pMySQLData.USERNAME, pMySQLData.PASSWORD, pMySQLData.USE_SSL);
 		this.TABLE_PREFIX = pMySQLData.TABLE_PREFIX;
+		if (pMySQLData.USE_CACHE) {
+			CACHE = new LocalPlayerCache();
+		} else {
+			CACHE = new NoCache();
+		}
 	}
 
 	public UUID getUUID(int pPlayerID) {
@@ -40,6 +49,10 @@ public class MySQL extends SQLCommunication {
 	 * @return Returns the ID of a player
 	 */
 	public int getPlayerID(UUID pUuid) {
+		Integer playerID = CACHE.getPlayerID(pUuid);
+		if (playerID != null) {
+			return playerID;
+		}
 		Connection con = getConnection();
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -47,7 +60,9 @@ public class MySQL extends SQLCommunication {
 			rs = (stmt = con.createStatement()).executeQuery("select player_id from " + TABLE_PREFIX
 					+ "players WHERE player_uuid='" + pUuid + "' LIMIT 1");
 			if (rs.next()) {
-				return rs.getInt("player_id");
+				playerID = rs.getInt("player_id");
+				CACHE.add(pUuid, playerID);
+				return playerID;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -64,6 +79,10 @@ public class MySQL extends SQLCommunication {
 	 * @return Returns the ID of a player
 	 */
 	public int getPlayerID(String pPlayerName) {
+		Integer playerID = CACHE.getPlayerID(pPlayerName);
+		if (playerID != null) {
+			return playerID;
+		}
 		Connection con = getConnection();
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -71,7 +90,9 @@ public class MySQL extends SQLCommunication {
 			rs = (stmt = con.createStatement()).executeQuery("select player_id from " + TABLE_PREFIX
 					+ "players WHERE player_name='" + pPlayerName + "' LIMIT 1");
 			if (rs.next()) {
-				return rs.getInt("player_id");
+				playerID = rs.getInt("player_id");
+				CACHE.add(pPlayerName, playerID);
+				return playerID;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -80,8 +101,8 @@ public class MySQL extends SQLCommunication {
 		}
 		return -1;
 	}
+
 	/**
-	 *
 	 * @param pPlayerID The ID of the player
 	 * @return Returns the number of friends of a player
 	 */
