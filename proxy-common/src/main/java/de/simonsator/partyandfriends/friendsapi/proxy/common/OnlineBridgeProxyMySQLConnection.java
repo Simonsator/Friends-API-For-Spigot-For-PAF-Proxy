@@ -36,7 +36,7 @@ public interface OnlineBridgeProxyMySQLConnection {
 		Connection con = getConnection();
 		PreparedStatement prepStmt = null;
 		try {
-			prepStmt = con.prepareStatement("insert into `" + getTablePrefix() + "online` (`player_id`) values (?)");
+			prepStmt = con.prepareStatement("insert into `" + getTablePrefix() + "online` (`player_id`) values (?) ON DUPLICATE KEY UPDATE player_id = player_id");
 			prepStmt.setInt(1, pPlayerId);
 			prepStmt.executeUpdate();
 		} catch (SQLException e) {
