@@ -11,7 +11,7 @@ import de.simonsator.partyandfriends.velocity.main.PAFPlugin;
 
 import java.nio.file.Path;
 
-@Plugin(id = "friends-api-mysql-proxy-bridge", name = "Friends-API-MySQL-Proxy-Bridge", version = "1.6.1-RELEASE",
+@Plugin(id = "friends-api-mysql-proxy-bridge", name = "Friends-API-MySQL-Proxy-Bridge", version = "1.6.2-RELEASE",
 		description = "Loads Friends-API-MySQL-Proxy-Bridge", authors = {"Simonsator"}, dependencies = {@Dependency(id = "partyandfriends")})
 public class FriendsAPIBridgeMainLoader {
 	private final Path folder;
@@ -24,6 +24,6 @@ public class FriendsAPIBridgeMainLoader {
 	@Subscribe
 	public void onProxyInitialization(ProxyInitializeEvent event) {
 		PAFPlugin.loadExtension(new VelocityExtensionLoadingInfo(new FriendsAPIBridgeMain(folder),
-				"friends-api-mysql-proxy-bridge", "Loads Friends-API-MySQL-Proxy-Bridge", "1.6.1-RELEASE", "Simonsator"));
+				"friends-api-mysql-proxy-bridge", "Loads Friends-API-MySQL-Proxy-Bridge", "1.6.2-RELEASE", "Simonsator"));
 	}
 }

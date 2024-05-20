@@ -6,7 +6,7 @@
 
 	<groupId>de.simonsator</groupId>
 	<artifactId>spigot-friends-api-parent</artifactId>
-	<version>1.6.1-RELEASE</version>
+	<version>1.6.2-RELEASE</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>proxy-common</module>
