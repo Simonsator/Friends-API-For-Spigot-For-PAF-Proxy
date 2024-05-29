@@ -22,7 +22,7 @@ PAFPlayer pafPlayer = PAFPlayerManager.getInstance().getPlayer(bukkitPlayer.getU
 <dependency>
     <groupId>de.simonsator</groupId>
     <artifactId>Party-and-Friends-MySQL-Edition-Spigot-API</artifactId>
-    <version>1.6.2-RELEASE</version>
+    <version>1.6.3-RELEASE</version>
     <scope>provided</scope>
 </dependency>
 </dependencies>
