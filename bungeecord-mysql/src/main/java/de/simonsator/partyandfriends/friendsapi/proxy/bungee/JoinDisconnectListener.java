@@ -31,6 +31,9 @@ public class JoinDisconnectListener extends WaitForTasksToFinish implements List
 			}
 			try {
 				taskStarts();
+				if (!pEvent.getPlayer().isConnected()) {
+					return;
+				}
 				PAFPlayer player = PAFPlayerManager.getInstance().getPlayer(pEvent.getPlayer().getUniqueId());
 				if (player.doesExist()) {
 					PAFPlayerMySQL pafPlayer = (PAFPlayerMySQL) player;

@@ -2,7 +2,7 @@ package de.simonsator.partyandfriends.friendsapi.proxy.velocity;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
-import com.velocitypowered.api.event.connection.PostLoginEvent;
+import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import de.simonsator.partyandfriends.velocity.api.adapter.BukkitBungeeAdapter;
 import de.simonsator.partyandfriends.velocity.api.pafplayers.PAFPlayer;
 import de.simonsator.partyandfriends.velocity.api.pafplayers.PAFPlayerManager;
@@ -20,7 +20,7 @@ public class JoinDisconnectListener extends WaitForTasksToFinish {
 	}
 
 	@Subscribe
-	public void onJoin(PostLoginEvent pEvent) {
+	public void onJoin(PlayerChooseInitialServerEvent pEvent) {
 		if (Main.getInstance().isShuttingDown()) {
 			return;
 		}
@@ -30,6 +30,9 @@ public class JoinDisconnectListener extends WaitForTasksToFinish {
 			}
 			try {
 				taskStarts();
+				if (!pEvent.getPlayer().isActive()) {
+					return;
+				}
 				PAFPlayer player = PAFPlayerManager.getInstance().getPlayer(pEvent.getPlayer().getUniqueId());
 				if (player.doesExist()) {
 					PAFPlayerMySQL pafPlayer = (PAFPlayerMySQL) player;
